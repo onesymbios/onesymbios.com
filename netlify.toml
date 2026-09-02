@@ -2,3 +2,11 @@
 [build]
   publish = "."
   command = ""
+
+# /representation/app/ used to serve a byte-identical copy of the Representation app.
+# The copy is gone; the URL still works.
+[[redirects]]
+  from = "/representation/app/*"
+  to = "/representation/"
+  status = 301
+  force = true
