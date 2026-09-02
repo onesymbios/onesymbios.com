@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbios — Flow</title>
+  <meta name="description" content="Symbios — High-Performing Culture. Flow is the signal. A culture design system that treats a high-performing culture as a profit strategy.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Symbios">
+  <meta property="og:title" content="Symbios — Flow">
+  <meta property="og:description" content="High-Performing Culture. Flow is the signal. A culture design system that treats culture as a profit strategy.">
+  <meta property="og:url" content="https://onesymbios.com/launch/">
+  <meta property="og:image" content="https://onesymbios.com/launch/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@onesymbios">
+  <meta name="twitter:title" content="Symbios — Flow">
+  <meta name="twitter:description" content="High-Performing Culture. Flow is the signal. A culture design system that treats culture as a profit strategy.">
+  <meta name="twitter:image" content="https://onesymbios.com/launch/og-image.png">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a09; }
+
+    #canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+    /* Cinematic letterbox */
+    .bar {
+      position: fixed; left: 0; right: 0;
+      height: 11vh; background: #000; z-index: 30;
+      pointer-events: none;
+    }
+    .bar-top    { top: 0; }
+    .bar-bottom { bottom: 0; }
+
+    /* Vignette */
+    #vignette {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse 75% 70% at 50% 50%,
+        transparent 35%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0.92) 100%);
+      pointer-events: none; z-index: 10;
+    }
+
+    /* Scanlines */
+    #scanlines {
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.018) 3px, rgba(0,0,0,0.018) 4px
+      );
+      pointer-events: none; z-index: 11;
+    }
+
+    /* UI text */
+    #ui {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      pointer-events: none; z-index: 20;
+    }
+
+    .eyebrow {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(0.55rem, 1.1vw, 0.7rem);
+      letter-spacing: 0.52em;
+      text-transform: uppercase;
+      color: #a8c6e8;
+      opacity: 0;
+      margin-bottom: clamp(1.2rem, 2.5vh, 2rem);
+      animation: riseFade 1.1s cubic-bezier(0.16,1,0.3,1) forwards 2.0s;
+    }
+
+    .title {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(3.2rem, 11.5vw, 8.5rem);
+      font-weight: 100;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: #fff;
+      opacity: 0;
+      text-shadow:
+        0 0 30px rgba(46,107,255,0.7),
+        0 0 70px rgba(46,107,255,0.35),
+        0 0 130px rgba(168,198,232,0.15);
+      animation: titleReveal 1.7s cubic-bezier(0.16,1,0.3,1) forwards 2.6s;
+    }
+
+
+
+    .return-link {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(0.5rem, 0.95vw, 0.62rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #8a8a86;
+      text-decoration: none;
+      opacity: 0;
+      margin-top: 1.9rem;
+      pointer-events: none;
+      transition: color 0.25s;
+      animation: returnReveal 0.9s ease forwards 5.0s;
+    }
+    .return-link:hover { color: #a8c6e8; }
+
+    /* The four paired tensions, cycling quietly — the human element.
+       CORAL, deliberately: the tensions are the human element, so this is the
+       most literal use of the warm accent in the whole system. It holds the
+       rules because each pair renders in ONE colour — neither half outranks
+       the other — and because a cycling pair is a label, not a word inside
+       a sentence. The horizon bloom is dimmed to compensate: this is now the
+       scene's coral zone, and there is only ever one. */
+    .tensions {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: clamp(0.48rem, 0.95vw, 0.62rem);
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: #ff8c5a;
+      opacity: 0;
+      margin-top: clamp(1.1rem, 2.2vh, 1.6rem);
+      height: 1.2em;
+      animation: riseFade 1.1s ease forwards 4.2s;
+    }
+    #tension {
+      opacity: 0;
+      transition: opacity 1.05s ease;
+    }
+    #tension.on { opacity: 0.85; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tensions, .eyebrow, .title, .return-link {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+      }
+      #tension { transition: none; }
+    }
+
+    @keyframes riseFade {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* like riseFade, but only becomes clickable once fully revealed */
+    @keyframes returnReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    }
+
+    @keyframes titleReveal {
+      0%   { opacity: 0; letter-spacing: 1.4em; filter: blur(28px); }
+      55%  { letter-spacing: 0.52em; }
+      100% { opacity: 1; letter-spacing: 0.55em; filter: blur(0); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="vignette"></div>
+  <div id="scanlines"></div>
+  <div class="bar bar-top"></div>
+  <div class="bar bar-bottom"></div>
+
+  <div id="ui">
+    <div class="eyebrow">High-Performing Culture</div>
+    <div class="title">SYMBIOS</div>
+    <div class="tensions"><span id="tension"></span></div>
+    <a href="/" class="return-link">&#8592; Return to Symbios</a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+
+  (() => {
+    'use strict';
+
+    const W = () => window.innerWidth;
+    const H = () => window.innerHeight;
+
+    // ── Helpers ──────────────────────────────────────────────────────────
+    const clamp   = (v, a, b) => Math.max(a, Math.min(b, v));
+    const sat     = (v, a, b) => clamp((v - a) / (b - a), 0, 1); // 0..1 in [a,b]
+    const lerp    = (a, b, t) => a + (b - a) * t;
+    const eio     = t => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; // easeInOut
+    const eout    = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+
+    // ── Renderer ─────────────────────────────────────────────────────────
+    const canvas = document.getElementById('canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setClearColor(0x0a0a09, 1);
+    renderer.setSize(W(), H());
+
+    let coralMat = null;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0a0a09, 0.020);
+
+    const camera = new THREE.PerspectiveCamera(55, W() / H(), 0.1, 300);
+    camera.position.set(0, 7, 26);
+    camera.lookAt(0, 0.4, -14);
+
+    // ── Glow sprite texture ───────────────────────────────────────────────
+    const spriteTex = (() => {
+      const c = document.createElement('canvas'); c.width = c.height = 128;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(64,64,0, 64,64,64);
+      g.addColorStop(0,    'rgba(255,255,255,1)');
+      g.addColorStop(0.15, 'rgba(200,210,255,0.9)');
+      g.addColorStop(0.4,  'rgba(46,107,255,0.35)');
+      g.addColorStop(0.75, 'rgba(168,198,232,0.08)');
+      g.addColorStop(1,    'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(0,0,128,128);
+      return new THREE.CanvasTexture(c);
+    })();
+
+    // ── Coral horizon bloom ───────────────────────────────────────────────
+    // A faint warm wash on the horizon. Dimmed from 0.62 to 0.30 on 7 Aug
+    // when the tensions took coral: the tensions are now the scene's coral
+    // zone, and this drops to atmosphere so the two don't compete.
+    (() => {
+      const c = document.createElement('canvas'); c.width = c.height = 256;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(128,128,0, 128,128,128);
+      g.addColorStop(0,    'rgba(255,140,90,0.55)');
+      g.addColorStop(0.35, 'rgba(255,140,90,0.20)');
+      g.addColorStop(0.7,  'rgba(255,140,90,0.05)');
+      g.addColorStop(1,    'rgba(255,140,90,0)');
+      ctx.fillStyle = g; ctx.fillRect(0,0,256,256);
+      const mat = new THREE.SpriteMaterial({
+        map: new THREE.CanvasTexture(c),
+        transparent: true, opacity: 0,
+        blending: THREE.AdditiveBlending, depthWrite: false,
+      });
+      const sprite = new THREE.Sprite(mat);
+      sprite.position.set(-6, 1.6, -40);
+      sprite.scale.set(46, 20, 1);
+      scene.add(sprite);
+      coralMat = mat;
+    })();
+
+    // ── Star field (sparse, above the horizon) ───────────────────────────
+    const starMat = (() => {
+      const N = 900;
+      const pos = new Float32Array(N * 3);
+      for (let i = 0; i < N; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const phi   = Math.acos(Math.random()); // upper hemisphere
+        const r     = 60 + Math.random() * 90;
+        pos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+        pos[i*3+1] = r * Math.cos(phi) * 0.6 + 4;
+        pos[i*3+2] = -Math.abs(r * Math.sin(phi) * Math.sin(theta)) - 10;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        size: 0.07, color: 0xccddff, transparent: true, opacity: 0,
+        sizeAttenuation: true,
+      });
+      scene.add(new THREE.Points(geo, mat));
+      return mat;
+    })();
+
+    // ── Ocean of light — particle wave field ─────────────────────────────
+    const NX = 240, NZ = 88, COUNT = NX * NZ;
+    const X0 = -42, X1 = 42, Z0 = -50, Z1 = 6;
+
+    const wPos = new Float32Array(COUNT * 3);
+    const wCol = new Float32Array(COUNT * 3);
+    const bCol = new Float32Array(COUNT * 3); // base color per particle
+    const gX   = new Float32Array(COUNT);
+    const gZ   = new Float32Array(COUNT);
+    const gPh  = new Float32Array(COUNT);
+
+    // one blue ramp: electric near, powder far, deep blue for texture
+    const C_ELEC = new THREE.Color(0x2e6bff);
+    const C_POWD = new THREE.Color(0xa8c6e8);
+    const C_DEEP = new THREE.Color(0x14306e);
+
+    let k = 0;
+    for (let iz = 0; iz < NZ; iz++) {
+      for (let ix = 0; ix < NX; ix++) {
+        const x = lerp(X0, X1, ix / (NX - 1)) + (Math.random() - 0.5) * 0.3;
+        const z = lerp(Z0, Z1, iz / (NZ - 1)) + (Math.random() - 0.5) * 0.3;
+        gX[k] = x; gZ[k] = z; gPh[k] = Math.random() * Math.PI * 2;
+        wPos[k*3] = x; wPos[k*3+1] = 0; wPos[k*3+2] = z;
+
+        // Base color: near swells lean electric, far water leans powder,
+        // with a slight random pull toward deep blue for texture.
+        const depth = sat(z, Z0, Z1);            // 0 far → 1 near
+        const c = C_POWD.clone().lerp(C_ELEC, depth * 0.85)
+                        .lerp(C_DEEP, Math.random() * 0.35);
+        bCol[k*3] = c.r; bCol[k*3+1] = c.g; bCol[k*3+2] = c.b;
+        wCol[k*3] = c.r; wCol[k*3+1] = c.g; wCol[k*3+2] = c.b;
+        k++;
+      }
+    }
+
+    const wGeo = new THREE.BufferGeometry();
+    wGeo.setAttribute('position', new THREE.BufferAttribute(wPos, 3));
+    wGeo.setAttribute('color',    new THREE.BufferAttribute(wCol, 3));
+    const wMat = new THREE.PointsMaterial({
+      size: 0.17, map: spriteTex, vertexColors: true,
+      transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false, sizeAttenuation: true,
+    });
+    scene.add(new THREE.Points(wGeo, wMat));
+
+    // Superposed traveling swells — the wave surface
+    function waveY(x, z, t) {
+      return Math.sin(x * 0.16 - t * 0.75)               * 1.35
+           + Math.sin(x * 0.055 + z * 0.09 - t * 0.42 + 1.3) * 0.95
+           + Math.cos(z * 0.14 - t * 0.60 + 0.6)         * 0.65
+           + Math.sin((x + z) * 0.30 - t * 1.45)         * 0.16;
+    }
+
+    // ── Time & animation loop ─────────────────────────────────────────────
+    const clock = new THREE.Clock();
+    let t = 0;
+    let frame = 0;
+
+    // Camera: glide down toward the water 0 → 9s, then drift on the swell
+    const CAM_START = { y: 7.0, z: 26 };
+    const CAM_END   = { y: 4.4, z: 14 };
+
+    function animate() {
+      requestAnimationFrame(animate);
+      frame++;
+      const dt = Math.min(clock.getDelta(), 0.05);
+      t += dt;
+
+      // Fade the ocean and stars in
+      wMat.opacity   = eio(sat(t, 0, 1.4)) * 0.85;
+      starMat.opacity = eio(sat(t, 0.6, 2.4)) * 0.4;
+      // coral breathes slowly — warmth you feel rather than read
+      if (coralMat) coralMat.opacity = eio(sat(t, 0.8, 3.2)) * (0.30 + Math.sin(t * 0.22) * 0.06);
+
+      // ── Wave surface update ─────────────────────────────────────────
+      if (frame % 2 === 0) {
+        const pos = wGeo.attributes.position.array;
+        const col = wGeo.attributes.color.array;
+        for (let i = 0; i < COUNT; i++) {
+          const x = gX[i], z = gZ[i];
+          const y = waveY(x, z, t * 1.18)
+                  + Math.sin(t * 0.9 + gPh[i]) * 0.06; // fine shimmer
+          pos[i*3+1] = y;
+
+          // Crests glow brighter — light gathers on the wave tops
+          const crest = sat(y, 0.5, 2.6);
+          const lift  = 0.5 + crest * 1.05;
+          col[i*3]   = Math.min(1, bCol[i*3]   * lift + crest * 0.30);
+          col[i*3+1] = Math.min(1, bCol[i*3+1] * lift + crest * 0.30);
+          col[i*3+2] = Math.min(1, bCol[i*3+2] * lift + crest * 0.28);
+        }
+        wGeo.attributes.position.needsUpdate = true;
+        wGeo.attributes.color.needsUpdate = true;
+      }
+
+      // ── Camera glide + riding the swell ─────────────────────────────
+      const camP = eio(sat(t, 0, 5.5));
+      const baseY = lerp(CAM_START.y, CAM_END.y, camP);
+      const baseZ = lerp(CAM_START.z, CAM_END.z, camP);
+      const sway  = eout(sat(t, 3, 7));
+
+      camera.position.x = Math.sin(t * 0.06) * 1.6 * sway;
+      camera.position.y = baseY + (Math.sin(t * 0.38) * 0.28 + Math.cos(t * 0.055) * 0.5) * sway;
+      camera.position.z = baseZ;
+      camera.lookAt(Math.sin(t * 0.04) * 2.0 * sway, 0.4, -14);
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // ── Tension cycler ────────────────────────────────────────────────────
+    // Ambient, not a list to read. Each pair holds, cross-fades, and the set
+    // loops — so no single tension ever reads as the headline.
+    (() => {
+      const el = document.getElementById('tension');
+      if (!el) return;
+      const pairs = [
+        'Freedom \u0026 Responsibility',
+        'Excellence \u0026 Compassion',
+        'Hustle \u0026 Fun',
+        'Care \u0026 Candor',
+      ];
+      let i = 0;
+      const HOLD = 3200, FADE = 1050;
+      function show() {
+        el.textContent = pairs[i];
+        el.classList.add('on');
+        setTimeout(() => {
+          el.classList.remove('on');
+          setTimeout(() => { i = (i + 1) % pairs.length; show(); }, FADE);
+        }, HOLD);
+      }
+      setTimeout(show, 4600);
+    })();
+
+    // ── Resize ────────────────────────────────────────────────────────────
+    window.addEventListener('resize', () => {
+      camera.aspect = W() / H();
+      camera.updateProjectionMatrix();
+      renderer.setSize(W(), H());
+    });
+
+    // ── Full-screen on click (but never hijack link clicks) ───────────────
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return; // let the Return to Symbios link navigate normally
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      }
+    });
+
+  })();
+  
+  </script>
+</body>
+</html>

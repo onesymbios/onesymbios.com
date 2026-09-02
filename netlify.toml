@@ -1,0 +1,4 @@
+# onesymbios.com — static site, no build step. Netlify publishes this repo root as-is.
+[build]
+  publish = "."
+  command = ""

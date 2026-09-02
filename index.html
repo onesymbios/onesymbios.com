@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbios — High-Performing Culture</title>
+  <meta name="description" content="High-Performing Culture. Symbios designs cultures where people and technology work in flow. Decisions get easier. Profit follows.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Symbios">
+  <meta property="og:title" content="Symbios — High-Performing Culture">
+  <meta property="og:description" content="Culture is a profit strategy. Symbios designs cultures where people and technology work in flow. Decisions get easier. Profit follows.">
+  <meta property="og:url" content="https://onesymbios.com/">
+  <meta property="og:image" content="https://onesymbios.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@onesymbios">
+  <meta name="twitter:title" content="Symbios — High-Performing Culture">
+  <meta name="twitter:description" content="Culture is a profit strategy. Symbios designs cultures where people and technology work in flow. Decisions get easier. Profit follows.">
+  <meta name="twitter:image" content="https://onesymbios.com/og-image.png">
+  <style>
+    :root {
+      /* Neutral dark. The old navy ramp carried the same violet cast as the old
+         light base — #131726 was chroma 11.4 and #7a839a was 13.5, both inherited
+         from the retired periwinkle. Now under chroma 2.3 throughout. */
+      color-scheme: dark;
+      --bg:       #0a0a09;
+      --bg2:      #121211;
+      --bg3:      #1b1b1a;
+      /* single blue ramp — electric is the action colour, powder the quiet tint */
+      --accent:      #2e6bff;   /* buttons, fills, active states — identical in both themes */
+      --accent-text: #7fa6ff;   /* links, arrows — the readable stop on dark */
+      --tint:        #a8c6e8;   /* powder — kickers, tags, quiet labels */
+      --text:     #f0f0ee;
+      --muted:    #8a8a86;
+      --border:   rgba(255,255,255,0.07);
+      --warm:      #ff8c5a;  /* coral, ambient — orbs and bars; identical in both themes */
+      --warm-text: #ff8c5a;  /* coral as type — the zone kicker; darkens on light */
+      --nav-bg:       rgba(10,10,9,0.85);
+      --nav-bg-solid: rgba(10,10,9,0.98);
+    }
+    html[data-theme="light"] {
+      /* Neutral off-white. The old #f6f7fb carried a violet cast — a* +0.39 with
+         b* -2.04, i.e. blue with a red lean — and #eceef4 was worse at chroma 3.16,
+         so surfaces got more violet as they darkened. Everything below is under
+         chroma 0.5, which is beneath the threshold where a flat field shows a tint. */
+      color-scheme: light;
+      --bg:       #f7f7f6;
+      --bg2:      #fdfdfc;
+      --bg3:      #efefee;
+      --text:     #1a1a19;
+      --muted:    #5f5f5d;
+      --border:   rgba(26,26,25,0.10);
+      --accent-text: #2760e5;   /* link blue darkens on light: #2e6bff is 4.20 here, fails AA */
+      --tint:        #47739f;   /* powder darkens on light or the micro-labels fail AA */
+      --warm-text:   #c44a18;   /* coral type needs a darker stop on light; the orb stays #ff8c5a */
+      --nav-bg:       rgba(247,247,246,0.85);
+      --nav-bg-solid: rgba(247,247,246,0.98);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 55px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 40px; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span {
+      font-weight: 300; opacity: 0.5; margin-left: 0.5em;
+      font-size: 0.7rem; letter-spacing: 0.18em;
+    }
+    .nav-links { display: flex; gap: 2.75rem; align-items: flex-start; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1.1rem;
+      border: 1px solid rgba(46,107,255,0.4);
+      border-radius: 3px;
+      color: var(--accent-text) !important;
+      transition: background 0.2s, border-color 0.2s !important;
+    }
+    .nav-cta:hover { background: rgba(46,107,255,0.1) !important; border-color: var(--accent) !important; }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted); cursor: pointer; line-height: 1;
+      font-size: 0.95rem; flex-shrink: 0;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--accent); background: rgba(46,107,255,0.08); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: auto;
+      display: flex; flex-direction: column;
+      justify-content: flex-start;
+      padding: 9rem 4rem 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      filter: blur(80px); opacity: 0.18;
+    }
+    .hero-orb-1 {
+      width: 600px; height: 600px;
+      background: var(--accent);
+      top: -100px; right: -100px;
+    }
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: var(--tint);
+      bottom: 50px; left: -80px;
+    }
+    .hero-orb-3 {
+      width: 340px; height: 340px;
+      background: var(--warm);
+      bottom: -90px; right: 24%;
+      opacity: 0.11;
+    }
+    /* Coral marks WHERE people are the subject, never WHICH idea matters.
+       Zone-level only: a section kicker, a hairline, the ambient hero orb.
+       Never inline on a word — inline colour ranks ideas, and the four tensions
+       are pairs by design, so colouring one half argues against the sentence.
+       One coral zone per view. */
+    .human-zone { color: var(--warm-text) !important; opacity: 1 !important; }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+      margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block; width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      /* One line at every width (Kyle, Aug 30). Sized off the viewport rather
+         than a fixed clamp so "High-Performing Culture" never wraps and never
+         overruns the 1.5rem/4rem hero gutters.
+         Tracking was -0.03em: at 88px in a 200 weight that pulled the r into
+         the f of "Performing". Kerning left on so the browser can still tighten. */
+      font-size: clamp(1.35rem, 7.4vw, 5rem);
+      font-weight: 200;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      font-kerning: normal;
+      white-space: nowrap;
+      max-width: none;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 strong {
+      font-weight: 600;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(120deg, var(--accent) 0%, var(--tint) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 3px;
+      font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: all 0.22s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #5484ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,107,255,0.3); }
+    .btn-outline {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      padding: 3.5rem 4rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .manifesto-inner { max-width: 780px; margin: 0 auto; }
+    .manifesto-label {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.5rem;
+    }
+    .manifesto blockquote {
+      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      font-weight: 300; line-height: 2;
+      color: var(--text);
+      border-left: 2px solid;
+      border-image: linear-gradient(to bottom, var(--accent), var(--tint)) 1;
+      padding-left: 2rem;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 4rem; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .label {
+      font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--accent-text); margin-bottom: 1rem;
+    }
+    .rule { width: 36px; height: 1.5px; background: linear-gradient(90deg, var(--accent), var(--tint)); margin: 1rem 0 2rem; }
+    h2.section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 300; letter-spacing: -0.02em;
+      max-width: 600px; line-height: 1.25; margin-bottom: 1.25rem;
+    }
+    .section-desc {
+      font-size: 0.95rem; color: var(--muted);
+      max-width: 520px; line-height: 1.85; margin-bottom: 3.5rem;
+    }
+    /* Standalone one- or two-sentence statements: wider measure, tighter leading
+       so a short sentence doesn't get chopped into loose, airy fragments. */
+    .section-lead {
+      font-size: 0.95rem; color: var(--muted);
+      max-width: 880px; line-height: 1.7; margin-bottom: 3.5rem;
+      text-wrap: pretty;
+    }
+
+    /* ── LAYERS ── */
+    .layers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .layer {
+      background: var(--bg);
+      padding: 2.25rem 2rem;
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+    }
+    .layer:hover { background: var(--bg3); }
+    .layer-accent-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .layer:nth-child(1) .layer-accent-bar { background: linear-gradient(90deg, var(--accent), transparent); }
+    .layer:nth-child(2) .layer-accent-bar { background: linear-gradient(90deg, var(--accent-text), transparent); }
+    .layer:nth-child(3) .layer-accent-bar { background: linear-gradient(90deg, var(--tint), transparent); }
+    .layer-num {
+      font-size: 0.65rem; letter-spacing: 0.2em; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 1.25rem;
+    }
+    .layer h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .layer-sub { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 1rem; }
+    .layer p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── SYMBIOSFLOW ── */
+    .flow-section { background: var(--bg2); }
+    .flow-pipeline {
+      display: flex; gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px 8px 0 0; overflow: hidden;
+      margin-bottom: 0;
+    }
+    .flow-step {
+      flex: 1; padding: 1.6rem 1.35rem;
+      border: none; border-right: 1px solid var(--border);
+      background: transparent; color: inherit; font: inherit; text-align: left;
+      width: 100%; cursor: pointer; display: block;
+      position: relative; transition: background 0.2s, box-shadow 0.2s;
+    }
+    .flow-step:last-child { border-right: none; }
+    .flow-step:hover { background: rgba(46,107,255,0.05); }
+    .flow-step:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .flow-step[aria-selected="true"] {
+      background: rgba(46,107,255,0.07);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+    .flow-step-n {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent-text); margin-bottom: 0.6rem; display: block;
+    }
+    .flow-step-h { display: block; font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .flow-step-q { display: block; font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+    .flow-arrow {
+      position: absolute; right: -8px; top: 50%;
+      transform: translateY(-50%);
+      width: 16px; height: 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; color: var(--accent-text); z-index: 1;
+    }
+    .flow-step:last-child .flow-arrow { display: none; }
+    .flow-tagline {
+      text-align: center; font-size: 0.9rem; color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px; padding: 1rem 2rem;
+      font-style: italic;
+    }
+    .culture-band-label {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--tint); font-weight: 600; margin: 2.75rem 0 1.25rem;
+    }
+
+    /* ── 5 P'S: elements panel ── */
+    .p-hint { font-size: 0.78rem; color: var(--muted); margin: -0.6rem 0 1.25rem; }
+    .p-panels {
+      border: 1px solid var(--border); border-top: none;
+      border-radius: 0 0 8px 8px;
+      background: var(--bg3);
+      padding: 1.9rem 1.75rem;
+      min-height: 330px;
+      margin-bottom: 3rem;
+    }
+    .p-panel[hidden] { display: none; }
+    .p-panel-head { margin-bottom: 1.4rem; }
+    .p-panel-kicker {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--tint); font-weight: 600; margin-bottom: 0.5rem;
+    }
+    .p-panel-head p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-width: 70ch; }
+    .p-elements { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .p-element {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.1rem 1.15rem;
+    }
+    .p-element-n {
+      font-size: 0.58rem; letter-spacing: 0.18em; color: var(--tint); font-weight: 600;
+    }
+    .p-element h4 { font-size: 0.88rem; font-weight: 600; margin: 0.5rem 0 0.3rem; }
+    .p-element-parent { display: block; font-size: 0.68rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .p-element p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+    /* the elements are the human layer of the framework — coral marks the whole zone */
+    .p-panel-kicker,
+    .p-element-n { color: var(--warm-text); }
+    .p-locked {
+      margin-top: 1.5rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .p-locked-label {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-right: 0.25rem;
+    }
+    .p-lock {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; color: var(--muted);
+      border: 1px dashed var(--border); border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+    }
+    .p-lock svg { width: 10px; height: 12px; flex-shrink: 0; opacity: 0.65; }
+    .p-request {
+      margin-left: auto; font-size: 0.78rem; font-weight: 500;
+      color: var(--accent-text); text-decoration: none;
+      border-bottom: 1px solid transparent; transition: border-color 0.2s;
+    }
+    .p-request:hover { border-bottom-color: var(--accent-text); }
+    @media (max-width: 900px) {
+      .p-elements { grid-template-columns: 1fr 1fr; }
+      .p-panels { min-height: 0; padding: 1.5rem 1.25rem; }
+      .p-request { margin-left: 0; }
+    }
+    @media (max-width: 560px) {
+      .p-elements { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── CAREER AGENT ── */
+    .career-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .career-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem; align-items: start;
+    }
+    .career-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .career-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .career-card:hover { border-color: rgba(46,107,255,0.35); transform: translateY(-2px); }
+    .career-card-icon { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .career-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .career-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    .career-quote {
+      margin-top: 2rem;
+      font-size: 0.85rem; color: var(--muted);
+      font-style: italic; line-height: 1.75;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--border);
+    }
+
+    /* ── THINKING ── */
+    .thinking-section { background: var(--bg2); }
+    .thinking-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .thinking-card {
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .thinking-card:hover { border-color: rgba(168,198,232,0.35); transform: translateY(-2px); }
+    .thinking-tag {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--tint); margin-bottom: 0.75rem;
+    }
+    .thinking-card h4 { font-size: 1rem; font-weight: 500; margin-bottom: 0.6rem; line-height: 1.35; }
+    .thinking-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── POINTS OF VIEW ── */
+    .pov-label {
+      margin-top: 3rem;
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent-text); font-weight: 500;
+    }
+    .pov-list {
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .pov-item {
+      display: flex; align-items: baseline; gap: 1.25rem;
+      padding: 0.95rem 1.5rem;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .pov-item:last-child { border-bottom: none; }
+    .pov-item:hover { background: rgba(46,107,255,0.05); }
+    .pov-item-tag {
+      flex-shrink: 0; width: 4.5rem;
+      font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent-text);
+    }
+    .pov-item-title { font-size: 0.9rem; font-weight: 500; color: var(--text); line-height: 1.4; }
+    .pov-item-sub { font-size: 0.78rem; color: var(--muted); }
+    .pov-item-arrow { margin-left: auto; flex-shrink: 0; font-size: 0.8rem; color: var(--accent-text); }
+    .pov-more { margin-top: 0.75rem; font-size: 0.75rem; color: var(--muted); font-style: italic; }
+    @media (max-width: 900px) {
+      .pov-item { flex-wrap: wrap; gap: 0.35rem 1rem; }
+      .pov-item-sub { flex-basis: 100%; }
+    }
+
+    /* ── CONTACT ── */
+    .contact-section { text-align: center; }
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+    .contact-section h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 1rem; }
+    .contact-section p { color: var(--muted); line-height: 1.85; margin-bottom: 2rem; }
+    .contact-email {
+      display: inline-block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 4rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 3rem;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-logo { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .footer-tagline { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
+    .footer-copy { font-size: 0.65rem; color: var(--muted); margin-top: 0.5rem; opacity: 0.6; }
+    .footer-cols { display: flex; gap: 3.5rem; }
+    .footer-col { display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-col-label {
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--tint); font-weight: 500; opacity: 0.8;
+      margin-bottom: 0.1rem;
+    }
+    .footer-col a {
+      font-size: 0.78rem; color: var(--muted); text-decoration: none;
+      letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--text); }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 1; transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    /* JS enhances with fade-in when available */
+    .js-ready .reveal {
+      opacity: 0; transform: translateY(24px);
+    }
+    .js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .launch-bar { font-size: 0.65rem; letter-spacing: 0.06em; gap: 0.5rem; }
+      .launch-bar-text { display: none; }
+      .launch-bar-arrow { display: none; }
+      .launch-bar::after {
+        content: "Symbios Flow \2192";
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        position: relative;
+        z-index: 1;
+      }
+
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, .section, .manifesto { padding: 4rem 1.5rem; }
+      .hero { padding-top: 9.5rem; min-height: auto; padding-bottom: 5rem; }
+      .hero-eyebrow { font-size: 0.62rem; letter-spacing: 0.22em; margin-bottom: 1.5rem; }
+      .layers, .thinking-grid { grid-template-columns: 1fr; }
+      .career-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .flow-pipeline { flex-direction: column; }
+      .flow-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .flow-step:last-child { border-bottom: none; }
+      footer { flex-direction: column; gap: 2rem; }
+      .footer-cols { flex-direction: column; gap: 1.5rem; }
+    }
+
+    /* ── LAUNCH ANNOUNCEMENT BAR ── */
+    .launch-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.75rem;
+      background: linear-gradient(90deg,
+        rgba(168,198,232,0.08) 0%,
+        rgba(46,107,255,0.15) 50%,
+        rgba(168,198,232,0.08) 100%);
+      border-bottom: 1px solid rgba(46,107,255,0.18);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      backdrop-filter: blur(12px);
+      transition: background 0.25s;
+      overflow: hidden;
+    }
+    .launch-bar::before {
+      content: '';
+      position: absolute; top: 0; left: -100%; right: -100%; bottom: 0;
+      background: linear-gradient(90deg,
+        transparent 0%, rgba(46,107,255,0.08) 50%, transparent 100%);
+      animation: barShimmer 4s ease-in-out infinite;
+    }
+    @keyframes barShimmer {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(50%); }
+    }
+    .launch-bar:hover {
+      background: linear-gradient(90deg,
+        rgba(168,198,232,0.14) 0%,
+        rgba(46,107,255,0.24) 50%,
+        rgba(168,198,232,0.14) 100%);
+    }
+    .launch-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent);
+      animation: dotPulse 2.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.5; box-shadow: none; }
+      50% { opacity: 1; box-shadow: 0 0 7px var(--accent); }
+    }
+    .launch-bar-text { position: relative; z-index: 1; }
+    .launch-bar-arrow {
+      opacity: 0.55; font-size: 0.85rem;
+      transition: transform 0.2s, opacity 0.2s;
+      position: relative; z-index: 1;
+    }
+    .launch-bar:hover .launch-bar-arrow { transform: translateX(4px); opacity: 1; }
+
+
+    /* ── NAV GROUPS ── */
+    .nav-groups {
+      display: flex; align-items: flex-start; gap: 2.25rem;
+    }
+    .nav-group {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .nav-group-label {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--tint); opacity: 0.75; pointer-events: none;
+      line-height: 1; font-weight: 500;
+    }
+    .nav-group a {
+      font-size: 0.8rem; letter-spacing: 0.04em; color: var(--text);
+      text-decoration: none; transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-group a:hover { color: var(--accent-text); }
+    /* Links sit in a row in the top nav (the footer stacks them) — same labels, same styling */
+    .nav-group-row { display: flex; gap: 1.35rem; align-items: baseline; }
+    nav .theme-toggle { margin-top: 0.5rem; }
+    .nav-divider {
+      width: 1px; align-self: stretch; min-height: 32px;
+      background: var(--border); flex-shrink: 0;
+    }
+    .nav-group-label.everyone, .mobile-nav-label.everyone, .seg-tag.everyone { color: var(--accent-text); opacity: 1; }
+    .nav-links a.nav-standalone {
+      color: var(--tint); opacity: 0.75; text-decoration: none;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-weight: 500; line-height: 1;
+      transition: color 0.2s, opacity 0.2s;
+    }
+    .nav-links a.nav-standalone:hover { color: var(--accent-text); opacity: 1; }
+    .seg-tag {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--tint); font-weight: 600; margin-bottom: 0.5rem;
+    }
+
+
+    /* ── X FOLLOW CTA ── */
+    .x-follow {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 2rem;
+      padding: 1.5rem 2rem;
+      border: 1px solid rgba(46,107,255,0.22);
+      border-radius: 6px;
+      background: rgba(46,107,255,0.04);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      gap: 1.5rem;
+    }
+    .x-follow:hover {
+      border-color: rgba(46,107,255,0.45);
+      background: rgba(46,107,255,0.08);
+    }
+    .x-follow-left { display: flex; flex-direction: column; gap: 0.3rem; }
+    .x-follow-label {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent-text); font-weight: 500;
+    }
+    .x-follow-handle {
+      font-size: 1.1rem; font-weight: 600; color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .x-follow-desc {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+      max-width: 480px;
+    }
+    .x-follow-btn {
+      flex-shrink: 0;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid rgba(46,107,255,0.4);
+      border-radius: 3px;
+      font-size: 0.78rem; letter-spacing: 0.06em;
+      color: var(--accent-text); white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .x-follow:hover .x-follow-btn {
+      background: rgba(46,107,255,0.12);
+      border-color: var(--accent);
+    }
+    @media (max-width: 900px) {
+      .x-follow { flex-direction: column; align-items: flex-start; }
+    }
+
+
+    /* ── MOBILE NAV ── */
+    .nav-hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 0.4rem; color: var(--text);
+      flex-direction: column; gap: 5px; align-items: center; justify-content: center;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--text);
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-nav {
+      display: none;
+      position: fixed; top: calc(40px + 58px); left: 0; right: 0;
+      background: var(--nav-bg-solid);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1.5rem 1.75rem;
+      z-index: 198;
+      flex-direction: column;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav-group {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav-label {
+      font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--tint); opacity: 0.8; display: block; margin-bottom: 0.4rem;
+    }
+    .mobile-nav-group a {
+      font-size: 1rem; color: var(--text); text-decoration: none;
+      letter-spacing: -0.01em; transition: color 0.2s;
+    }
+    .mobile-nav-group a:hover { color: var(--accent-text); }
+    .mobile-nav-stack { display: flex; flex-direction: column; gap: 0.6rem; }
+    .mobile-nav-misc {
+      padding: 0.9rem 0;
+      display: flex; gap: 1.5rem; align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav-misc a {
+      font-size: 0.85rem; color: var(--muted); text-decoration: none;
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .mobile-nav-misc a:hover { color: var(--text); }
+    .mobile-nav-cta { padding-top: 1.25rem; }
+    .mobile-nav-cta a {
+      display: inline-block; padding: 0.7rem 1.5rem;
+      border: 1px solid rgba(46,107,255,0.4); border-radius: 3px;
+      font-size: 0.85rem; color: var(--accent-text); text-decoration: none;
+      transition: background 0.2s;
+    }
+    .mobile-nav-cta a:hover { background: rgba(46,107,255,0.1); }
+    @media (max-width: 900px) {
+      .nav-hamburger { display: flex; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ── LAUNCH ANNOUNCEMENT ── -->
+<a href="/launch/" class="launch-bar">
+  <div class="launch-dot"></div>
+  <span class="launch-bar-text">Symbios Flow</span>
+  <span class="launch-bar-arrow">&#8594;</span>
+</a>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a href="#top" class="nav-logo">Symbios <span>onesymbios.com</span></a>
+  <div class="nav-links">
+    <div class="nav-groups">
+      <div class="nav-group">
+        <span class="nav-group-label">Culture</span>
+        <a href="#culture">High-Performing Culture</a>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-group">
+        <span class="nav-group-label">Explore</span>
+        <div class="nav-group-row">
+          <a href="#thinking">Ideas</a>
+          <a href="https://x.com/onesymbios" target="_blank" rel="noopener">@onesymbios</a>
+          <a href="mailto:connect@onesymbios.com">Contact</a>
+        </div>
+      </div>
+    </div>
+    <a href="#contact" class="nav-cta">Connect</a>
+    <button class="theme-toggle" aria-label="Toggle light or dark theme"></button>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-group">
+    <span class="mobile-nav-label">Culture</span>
+    <a href="#culture" class="mobile-nav-close">High-Performing Culture</a>
+  </div>
+  <div class="mobile-nav-group">
+    <span class="mobile-nav-label">Explore</span>
+    <div class="mobile-nav-stack">
+      <a href="#thinking" class="mobile-nav-close">Ideas</a>
+      <a href="https://x.com/onesymbios" target="_blank" rel="noopener">@onesymbios</a>
+      <a href="mailto:connect@onesymbios.com">Contact</a>
+    </div>
+  </div>
+  <div class="mobile-nav-misc">
+    <button class="theme-toggle" aria-label="Toggle light or dark theme"></button>
+  </div>
+  <div class="mobile-nav-cta">
+    <a href="#contact" class="mobile-nav-close">Connect →</a>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-eyebrow">Symbios Culture</div>
+  <h1>
+    <span class="gradient-text">High-Performing</span> Culture
+  </h1>
+  <p class="hero-sub">
+    Most companies treat culture as a tagline. The ones that win treat it as how decisions actually get made. Symbios designs cultures where people and technology work in flow. Decisions get easier. Profit follows.
+  </p>
+  <div class="hero-actions">
+    <a href="#culture" class="btn btn-primary">Explore the System</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<section class="manifesto">
+  <div class="manifesto-inner">
+    <div class="manifesto-label">Manifesto</div>
+    <blockquote>
+      "You can feel a high-performing culture. Decisions move without waiting on a dozen approvals. People own the outcome instead of waiting to be told. The bar is high, and it's held with care. Symbios Culture is a performance system and it shows up as profit."
+    </blockquote>
+  </div>
+</section>
+
+
+
+<section class="section flow-section" id="culture">
+  <div class="section-inner">
+    <div class="label">Symbios Culture</div>
+    <div class="rule"></div>
+    <h2 class="section-title reveal">A culture design system.</h2>
+    <p class="section-desc reveal">A high-performing culture is a profit strategy. It drives revenue through four measurable mechanisms — alignment, speed, innovation, and intrinsic motivation. Symbios Culture treats it as an operating system — a complete framework, the 5 P's.</p>
+    <div class="culture-band-label reveal">The Framework · The 5 P's</div>
+    <p class="p-hint reveal">Five stages. Four elements each. Tools to implement (request access). Hover a stage to see what it contains.</p>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-lock" viewBox="0 0 10 12"><path d="M2.2 5.2V3.3a2.8 2.8 0 0 1 5.6 0v1.9" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="0.6" y="5.2" width="8.8" height="6.2" rx="1.2" fill="currentColor"/></symbol></svg>
+    <div class="flow-pipeline reveal" role="tablist" aria-label="The five stages">
+      <button type="button" class="flow-step" role="tab" id="ptab-1" aria-controls="ppanel-1" aria-selected="true">
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <span class="flow-step-n">01</span>
+        <span class="flow-step-h">Purpose</span>
+        <span class="flow-step-q">Why this exists, and why it pays</span>
+      </button>
+      <button type="button" class="flow-step" role="tab" id="ptab-2" aria-controls="ppanel-2" aria-selected="false" tabindex="-1">
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <span class="flow-step-n">02</span>
+        <span class="flow-step-h">Principles</span>
+        <span class="flow-step-q">How decisions get made without rules</span>
+      </button>
+      <button type="button" class="flow-step" role="tab" id="ptab-3" aria-controls="ppanel-3" aria-selected="false" tabindex="-1">
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <span class="flow-step-n">03</span>
+        <span class="flow-step-h">Priorities</span>
+        <span class="flow-step-q">What wins right now, and what stops</span>
+      </button>
+      <button type="button" class="flow-step" role="tab" id="ptab-4" aria-controls="ppanel-4" aria-selected="false" tabindex="-1">
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <span class="flow-step-n">04</span>
+        <span class="flow-step-h">Practices</span>
+        <span class="flow-step-q">How it becomes ordinary behavior</span>
+      </button>
+      <button type="button" class="flow-step" role="tab" id="ptab-5" aria-controls="ppanel-5" aria-selected="false" tabindex="-1">
+        <span class="flow-step-n">05</span>
+        <span class="flow-step-h">Performance</span>
+        <span class="flow-step-q">Whether any of it actually worked</span>
+      </button>
+    </div>
+
+    <div class="p-panels reveal">
+
+      <div class="p-panel" id="ppanel-1" data-p="1" role="tabpanel" aria-labelledby="ptab-1">
+        <div class="p-panel-head">
+          <div class="p-panel-kicker">Purpose Elements</div>
+          <p>Why the organization exists and why the work matters to the people doing it. Most purpose work stops at the sentence. Three of these four are the parts that get skipped.</p>
+        </div>
+        <div class="p-elements">
+          <div class="p-element">
+            <span class="p-element-n">1.1</span>
+            <h4>The Statement</h4>
+            <p>Two or three words that survive ten thousand repetitions. Short enough to say in a hallway, specific enough to rule things out.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">1.2</span>
+            <h4>The Mechanism</h4>
+            <p>The causal chain from the statement to the money, in one sentence. A purpose without a mechanism is a poster.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">1.3</span>
+            <h4>The Origin</h4>
+            <p>Why this company, these people, this moment. The part a competitor can't copy, because it's history rather than strategy.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">1.4</span>
+            <h4>The Refusals</h4>
+            <p>At least three things the purpose rules out: customers not served, revenue declined, growth not taken. A purpose that forbids nothing decides nothing.</p>
+          </div>
+        </div>
+        <div class="p-locked">
+          <span class="p-locked-label">Tools</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Design Intensive</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Friction Diagnosis</span>
+
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+        </div>
+      </div>
+
+      <div class="p-panel" id="ppanel-2" data-p="2" role="tabpanel" aria-labelledby="ptab-2" hidden>
+        <div class="p-panel-head">
+          <div class="p-panel-kicker">Principles Elements</div>
+          <p>The behavioral standards and decision heuristics that scale culture without rules. Four paired tensions, held together rather than traded off. The four are fixed. How a company writes them is not, and they only count when the leadership team writes them in its own words.</p>
+        </div>
+        <div class="p-elements">
+          <div class="p-element">
+            <span class="p-element-n">2.1</span>
+            <h4>Freedom &amp; Responsibility</h4>
+            <p>Real autonomy paired with real responsibility for outcomes. Freedom without responsibility is chaos. The more you own, the freer you get, and that deal has to be explicit.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">2.2</span>
+            <h4>Excellence &amp; Compassion</h4>
+            <p>An uncompromising bar, held with genuine care. Compassion here is mostly removing barriers: the approval that adds four days, the pay that quietly drifted below market.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">2.3</span>
+            <h4>Hustle &amp; Fun</h4>
+            <p>Real intensity and real enjoyment, both present. Much of the fun is produced by the hustle itself, alongside teammates who are excellent and who clear each other's path.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">2.4</span>
+            <h4>Care &amp; Candor</h4>
+            <p>Deep care paired with direct honesty. Say what you really think, with positive intent, in the week it's relevant rather than eleven months later.</p>
+          </div>
+        </div>
+        <div class="p-locked">
+          <span class="p-locked-label">Tools</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Responsibility Ladder</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Leadership Archetype</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Agent Delegation Ladder</span>
+
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+        </div>
+      </div>
+
+      <div class="p-panel" id="ppanel-3" data-p="3" role="tabpanel" aria-labelledby="ptab-3" hidden>
+        <div class="p-panel-head">
+          <div class="p-panel-kicker">Priorities Elements</div>
+          <p>What matters most in the current period and where the organization puts its energy. Reset every ninety days. A committee is not an owner.</p>
+        </div>
+        <div class="p-elements">
+          <div class="p-element">
+            <span class="p-element-n">3.1</span>
+            <h4>The One Thing</h4>
+            <p>The single priority that wins when it collides with any other. Not the most important of five, which is a ranking nobody has to honour.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">3.2</span>
+            <h4>The Quarterly Set</h4>
+            <p>Three to five measurable commitments for the ninety days, each with exactly one named owner.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">3.3</span>
+            <h4>The Stop List</h4>
+            <p>What the organization stops this period: projects, meetings, reports, approvals. Priorities without subtraction are wishes, and the speed comes from the subtraction.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">3.4</span>
+            <h4>The Trade-Off Rule</h4>
+            <p>What wins when two priorities collide, agreed once at the leadership table instead of re-argued every week in the middle of the work.</p>
+          </div>
+        </div>
+        <div class="p-locked">
+          <span class="p-locked-label">Tools</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Quarterly Review</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Stop List method</span>
+
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+        </div>
+      </div>
+
+      <div class="p-panel" id="ppanel-4" data-p="4" role="tabpanel" aria-labelledby="ptab-4" hidden>
+        <div class="p-panel-head">
+          <div class="p-panel-kicker">Practices Elements</div>
+          <p>How culture becomes ordinary behavior. Exactly one practice answers to each of the four principles. A company can add more, but every added practice names the principle it answers to.</p>
+        </div>
+        <div class="p-elements">
+          <div class="p-element">
+            <span class="p-element-n">4.1</span>
+            <h4>Feedback</h4>
+            <span class="p-element-parent">← Care &amp; Candor</span>
+            <p>A shared structure for saying the hard thing well, practiced until it's unremarkable. Notice what happened, name the outcome, propose the way forward.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">4.2</span>
+            <h4>Market Pay &amp; Barrier Removal</h4>
+            <span class="p-element-parent">← Excellence &amp; Compassion</span>
+            <p>A standing sweep for the limiting factors in front of a team. Pay that drifted, tools nobody will replace, approvals that add four days.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">4.3</span>
+            <h4>Performance Check-Ins</h4>
+            <span class="p-element-parent">← Freedom &amp; Responsibility</span>
+            <p>A recurring, low-ceremony read on whether a person owns their outcomes and whether the company still deserves them. Two honest questions beat a nine-box grid.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">4.4</span>
+            <h4>Operating Rhythm</h4>
+            <span class="p-element-parent">← Hustle &amp; Fun</span>
+            <p>The cadence that carries momentum: the meeting set, the offsite, the rituals that mark work as shared. The container the other three run inside.</p>
+          </div>
+        </div>
+        <div class="p-locked">
+          <span class="p-locked-label">Tools</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>N.O.W. Feedback</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Barrier Audit</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Champion Check-In</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Rhythm Set</span>
+
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+        </div>
+      </div>
+
+      <div class="p-panel" id="ppanel-5" data-p="5" role="tabpanel" aria-labelledby="ptab-5" hidden>
+        <div class="p-panel-head">
+          <div class="p-panel-kicker">Performance Elements</div>
+          <p>The signals that establish whether the system is working. One measure per mechanism, and the same four mechanisms the commercial claim rests on. All four are baselined before the practices go in.</p>
+        </div>
+        <div class="p-elements">
+          <div class="p-element">
+            <span class="p-element-n">5.1</span>
+            <h4>Alignment</h4>
+            <p>How much of the direction that was set survives the period unchanged. Aligned teams don't wait, and most execution problems are alignment problems wearing a costume.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">5.2</span>
+            <h4>Speed</h4>
+            <p>Median time from a decision being raised to being resolved, on an agreed class of decisions. Margin hides in the work nobody double-checks.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">5.3</span>
+            <h4>Innovation</h4>
+            <p>Improvements that started below the executive layer and shipped inside the period. Not a department.</p>
+          </div>
+          <div class="p-element">
+            <span class="p-element-n">5.4</span>
+            <h4>Intrinsic Motivation</h4>
+            <p>Regretted attrition against baseline, and manager effectiveness on the culture pulse. Motivation you don't have to manage is the cheapest performance system available.</p>
+          </div>
+        </div>
+        <div class="p-locked">
+          <span class="p-locked-label">Tools</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Symbios Culture Index</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Culture Pulse</span>
+
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="section-lead reveal">Why now? As agents multiply output, alignment becomes the scarce advantage. Culture is how you build it.</p>
+
+    <div class="flow-tagline reveal">"Culture is a performance system."</div>
+    <div class="reveal" style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:2rem;">
+      <a href="#contact" class="btn btn-primary">Work With Us</a>
+      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="btn btn-outline" target="_blank" rel="noopener">Read Our Point of View</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── THINKING ── -->
+<section class="section thinking-section" id="thinking">
+  <div class="section-inner">
+    <div class="label">Symbios Ideas</div>
+    <div class="rule"></div>
+    <h2 class="section-title reveal">An ongoing conversation.</h2>
+    <p class="section-lead reveal">Symbios publishes content exploring the intersection of people, culture, technology, and flow. X is our main channel. Follow along at <a href="https://x.com/onesymbios" target="_blank" rel="noopener" style="color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">@onesymbios</a>.</p>
+    <div class="thinking-grid">
+      <div class="thinking-card reveal">
+        <div class="thinking-tag">Personal</div>
+        <h4>Individual Flow</h4>
+        <p>Attention, energy, and technology in daily life.</p>
+      </div>
+      <div class="thinking-card reveal">
+        <div class="thinking-tag">Work</div>
+        <h4>Team, Culture and Leadership</h4>
+        <p>Meetings, decisions, communication patterns, and the leadership behaviors that create or kill momentum.</p>
+      </div>
+      <div class="thinking-card reveal">
+        <div class="thinking-tag">Systems</div>
+        <h4>Org &amp; Product Design</h4>
+        <p>How organizational structure, technology architecture, and human + agent collaboration help or get in the way.</p>
+      </div>
+      <div class="thinking-card reveal">
+        <div class="thinking-tag">Environment</div>
+        <h4>Context &amp; Space</h4>
+        <p>How physical and mental context — nature, movement, space, lifestyle — shape the quality of our work.</p>
+      </div>
+      <div class="thinking-card reveal" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; background: transparent; border-style: dashed;">
+        <p style="font-size: 0.8rem; color: var(--muted); font-style: italic; line-height: 1.8;">"Does this create flow — or friction?" That's the question behind every Symbios idea.</p>
+      </div>
+    </div>
+    <div class="pov-label reveal">Points of View</div>
+    <div class="pov-list reveal">
+      <a href="https://docs.google.com/document/d/1HqnECPnSH0Zd6dkBlqjO_H0x__g3VVzBKGh6vQRZmZE/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Standards</span>
+        <span class="pov-item-title">Your Real Standard Is the Worst Work You Accept</span>
+        <span class="pov-item-sub">Nobody learns the bar from the document</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
+      <a href="https://docs.google.com/document/d/1LvSZPd4R2mQ2a0nkcmE4V3NZkq8954ikKJZe7nkrEdo/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Trust</span>
+        <span class="pov-item-title">Most Companies Replaced Trust With Process</span>
+        <span class="pov-item-sub">Every sign-off you added is a bill for trust you did not have</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
+      <a href="https://docs.google.com/document/d/1KaiWOPdFhi9ZtwMvksc2cyxe7nbZrJsntEhIn67RTnk/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Friction</span>
+        <span class="pov-item-title">Friction Is the Diagnosis</span>
+        <span class="pov-item-sub">The drag your team feels is the most honest data in the company</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
+      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Culture</span>
+        <span class="pov-item-title">Culture Is a Performance System</span>
+        <span class="pov-item-sub">The four paired tensions behind a high-performing culture</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
+      <a href="https://docs.google.com/document/d/1uxwfl7KnRO9hkf4uNiftC7yYYqLM4h4UnsvA0xwsLWw/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Flow</span>
+        <span class="pov-item-title">The Flow State Future</span>
+        <span class="pov-item-sub">People, Physical AI, and the return to human interface</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
+    </div>
+    <p class="pov-more reveal">New points of view are published regularly.</p>
+    <a href="https://x.com/onesymbios" class="x-follow reveal" target="_blank" rel="noopener">
+      <div class="x-follow-left">
+        <span class="x-follow-label">Main Channel</span>
+        <span class="x-follow-handle">@onesymbios</span>
+        <span class="x-follow-desc">Where the ideas live. Follow on X for ideas on people, technology, culture, and what it means to work in flow.</span>
+      </div>
+      <span class="x-follow-btn">Follow on X →</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="section contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="label" style="text-align: center;">Connect</div>
+    <div class="rule" style="margin: 1rem auto 2rem;"></div>
+    <h2 class="reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300; max-width: none; margin-bottom: 1rem;">Ready to build a high-performing culture?</h2>
+    <p class="reveal">If you're ready to treat culture as a profit strategy, let's start a conversation.</p>
+    <a href="mailto:connect@onesymbios.com" class="btn btn-primary reveal">Start a Conversation</a>
+    <br>
+    <a href="mailto:connect@onesymbios.com" class="contact-email reveal">connect@onesymbios.com</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo">Symbios</div>
+    <div class="footer-tagline">High-Performing Culture</div>
+    <div class="footer-copy">© 2026 Symbios · onesymbios.com</div>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <span class="footer-col-label">Culture</span>
+      <a href="#culture">High-Performing Culture</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Explore</span>
+      <a href="#thinking">Ideas</a>
+      <a href="https://x.com/onesymbios" target="_blank" rel="noopener">@onesymbios</a>
+      <a href="mailto:connect@onesymbios.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Theme: light by default (Aug 26, 2026 — was dark), dark on toggle, choice remembered ──
+  (function () {
+    var root = document.documentElement;
+    var saved = null;
+    try { saved = localStorage.getItem('symbios-theme'); } catch (e) {}
+    function apply(theme) {
+      root.setAttribute('data-theme', theme);
+      document.querySelectorAll('.theme-toggle').forEach(function (b) {
+        b.textContent = theme === 'dark' ? '☀' : '☾'; // sun in dark, moon in light
+        b.setAttribute('title', theme === 'dark' ? 'Switch to light' : 'Switch to dark');
+      });
+    }
+    apply(saved === 'dark' ? 'dark' : 'light');
+    document.querySelectorAll('.theme-toggle').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem('symbios-theme', next); } catch (e) {}
+      });
+    });
+  })();
+
+  // ── The 5 P's: hover or focus a stage to reveal its four elements ──
+  (function () {
+    var tabs = [].slice.call(document.querySelectorAll('.flow-step'));
+    var panels = [].slice.call(document.querySelectorAll('.p-panel'));
+    if (tabs.length !== panels.length || !tabs.length) return;
+    function select(i) {
+      tabs.forEach(function (t, j) {
+        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        t.setAttribute('tabindex', j === i ? '0' : '-1');
+      });
+      panels.forEach(function (p, j) { p.hidden = j !== i; });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('mouseenter', function () { select(i); });
+      t.addEventListener('focus', function () { select(i); });
+      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        tabs[(i + d + tabs.length) % tabs.length].focus();
+      });
+    });
+    // Hold one height for every panel so hovering across the row never jumps.
+    function sizePanels() {
+      var open = panels.filter(function (p) { return !p.hidden; })[0];
+      var tallest = 0;
+      panels.forEach(function (p) { p.style.minHeight = ''; });
+      panels.forEach(function (p) {
+        p.hidden = false;
+        tallest = Math.max(tallest, p.offsetHeight);
+        p.hidden = true;
+      });
+      panels.forEach(function (p) { p.style.minHeight = tallest + 'px'; });
+      if (open) open.hidden = false;
+    }
+    select(0);
+    sizePanels();
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(sizePanels, 150);
+    });
+  })();
+
+  // Enable JS-powered animations only when JS is running
+  document.documentElement.classList.add('js-ready');
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => { e.target.classList.add('visible'); }, i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Mobile nav toggle
+  const hamburger = document.getElementById('nav-hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-nav-close').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+
+  // Subtle parallax on hero orbs
+  window.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    document.querySelector('.hero-orb-1').style.transform = `translate(${x}px, ${y}px)`;
+    document.querySelector('.hero-orb-2').style.transform = `translate(${-x * 0.7}px, ${-y * 0.7}px)`;
+  });
+</script>
+
+</body>
+</html>
