@@ -168,17 +168,53 @@
       display: block; width: 24px; height: 1px;
       background: var(--accent);
     }
+    /* Pronunciation line, moved up from /about/ into the hero (Kyle, Sep 7).
+       Not the uppercase eyebrow treatment: uppercasing would destroy the
+       casing that makes "SIM-bee-ose" readable as a pronunciation. */
+    .hero-pronounce {
+      max-width: 540px;
+      margin-bottom: 1.75rem;
+      padding-left: 2.25rem;
+      position: relative;
+      line-height: 1.7;
+    }
+    .hero-pronounce::before {
+      content: '';
+      position: absolute; left: 0; top: 0.62em;
+      display: block; width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .hero-pronounce .hp-name {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--accent-text);
+      letter-spacing: 0.01em;
+    }
+    .hero-pronounce .hp-def {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
     .hero h1 {
       /* One line at every width (Kyle, Aug 30). Sized off the viewport rather
          than a fixed clamp so "High-Performing Culture" never wraps and never
          overruns the 1.5rem/4rem hero gutters.
-         Tracking was -0.03em: at 88px in a 200 weight that pulled the r into
-         the f of "Performing". Kerning left on so the browser can still tighten. */
+         Tracking history: -0.03em fused the r into the f of "Performing";
+         -0.015em (Aug 30) reduced the damage but the pair still touched
+         (Kyle, Sep 7). Measured on a Mac by rendering "Performing" at
+         weight 200 and counting connected ink regions: a clean word is 11
+         islands, and -0.015em gives 10 at every size tested. The pair only
+         separates from +0.011em up, so this sits just above at 0.012em.
+         Ligatures off so the browser cannot re-join rf; kerning stays on.
+         Size is unchanged: 0.012em widens the line 6.5%, and 7.4vw was
+         already well inside the gutters (mobile tolerates up to 8.55vw). */
       font-size: clamp(1.35rem, 7.4vw, 5rem);
       font-weight: 200;
       line-height: 1.15;
-      letter-spacing: -0.015em;
+      letter-spacing: 0.012em;
       font-kerning: normal;
+      font-variant-ligatures: none;
       white-space: nowrap;
       max-width: none;
       margin-bottom: 1.75rem;
@@ -567,6 +603,9 @@
       .hero, .section, .manifesto { padding: 4rem 1.5rem; }
       .hero { padding-top: 9.5rem; min-height: auto; padding-bottom: 5rem; }
       .hero-eyebrow { font-size: 0.62rem; letter-spacing: 0.22em; margin-bottom: 1.5rem; }
+      .hero-pronounce { margin-bottom: 1.5rem; padding-left: 0; }
+      .hero-pronounce::before { display: none; }
+      .hero-pronounce .hp-name, .hero-pronounce .hp-def { font-size: 0.8rem; }
       .layers, .thinking-grid { grid-template-columns: 1fr; }
       .career-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .flow-pipeline { flex-direction: column; }
@@ -844,15 +883,18 @@
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-orb hero-orb-3"></div>
-  <div class="hero-eyebrow">Symbios Culture</div>
+  <div class="hero-pronounce">
+    <span class="hp-name">Symbios (sim-bee-ohss).</span>
+    <span class="hp-def">From symbiosis: things that don&#39;t just coexist &mdash; they make each other better.</span>
+  </div>
   <h1>
     <span class="gradient-text">High-Performing</span> Culture
   </h1>
   <p class="hero-sub">
-    More than twenty years inside companies taught me what makes the good ones work. Symbios is where I write it down and build it out. The method works. Cultures designed this way get more effective, and it shows up in revenue, growth and profit.
+    Many companies treat culture as a tagline. The ones that win treat it as how decisions get made. Symbios designs culture where people and technology work in flow. Decisions get easier. Revenue, profit and growth will follow.
   </p>
   <p class="hero-sub" style="margin-top:1.25rem;">
-    More of the work in your company is about to be done by agents. Who owns the outcome when it is? That&#39;s a culture question.
+    More of the work in companies will be done by agents. Who owns the alignment and outcome? That&#39;s a culture question.
   </p>
   <div class="hero-actions">
     <a href="#culture" class="btn btn-primary">Read the framework</a>
@@ -865,7 +907,7 @@
   <div class="manifesto-inner">
     <div class="manifesto-label">Manifesto</div>
     <blockquote>
-      "You can feel a high-performing culture in the first week. Decisions move without waiting on a dozen approvals. People own the outcome instead of waiting to be told. The bar is high and it's held with care. Twenty years of watching it taught me exactly what produces that. Symbios Culture is that answer, written down and built into a method a leadership team can run on Monday."
+      "You can feel a high-performing culture. Decisions move without waiting on a dozen approvals. People own the outcome instead of waiting to be told. The bar is high and it's held with care. Twenty years of watching and designing culture has taught me what produces flow and performance. Symbios Culture is that design, written down and built into a framework."
     </blockquote>
     <a href="/about/" class="reveal"
        style="display:flex;align-items:center;gap:0.9rem;margin:2.25rem 0 0 2rem;text-decoration:none;width:fit-content;">
@@ -886,9 +928,9 @@
     <div class="label">Symbios Culture</div>
     <div class="rule"></div>
     <h2 class="section-title reveal">A culture design system.</h2>
-    <p class="section-desc reveal">Five stages, four elements each, from purpose through to performance. I build the implementation detail because that's the test. An idea about culture that can't become something a team does on a Tuesday isn't worth having.</p>
+    <p class="section-desc reveal">Five stages, four elements each, from purpose through to performance. Tools that turn culture into action, measured by alignment, speed, innovation and motivation.</p>
     <div class="culture-band-label reveal">The Framework · The 5 P's</div>
-    <p class="p-hint reveal">The elements are public. The methods and tools that implement them are Symbios's own. Hover a stage to see what it contains.</p>
+    <p class="p-hint reveal">The stages and elements are public. The tools that execute them are available on request. Hover a stage to see what it contains.</p>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-lock" viewBox="0 0 10 12"><path d="M2.2 5.2V3.3a2.8 2.8 0 0 1 5.6 0v1.9" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="0.6" y="5.2" width="8.8" height="6.2" rx="1.2" fill="currentColor"/></symbol></svg>
     <div class="flow-pipeline reveal" role="tablist" aria-label="The five stages">
       <button type="button" class="flow-step" role="tab" id="ptab-1" aria-controls="ppanel-1" aria-selected="true">
@@ -956,7 +998,7 @@
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Design Intensive</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Friction Diagnosis</span>
 
-          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
       </div>
 
@@ -991,9 +1033,8 @@
           <span class="p-locked-label">Tools</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Responsibility Ladder</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Leadership Archetype</span>
-          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Agent Delegation Ladder</span>
 
-          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
       </div>
 
@@ -1029,7 +1070,7 @@
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Quarterly Review</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Stop List method</span>
 
-          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
       </div>
 
@@ -1047,15 +1088,15 @@
           </div>
           <div class="p-element">
             <span class="p-element-n">4.2</span>
-            <h4>Market Pay &amp; Barrier Removal</h4>
+            <h4>Market Pay</h4>
             <span class="p-element-parent">← Excellence &amp; Compassion</span>
-            <p>A standing sweep for the limiting factors in front of a team. Pay that drifted, tools nobody will replace, approvals that add four days.</p>
+            <p>A standing check that what people are paid still tracks the market, corrected before anyone has to ask. Pay drifts quietly, and the people who notice it last are usually the ones worth keeping most.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">4.3</span>
             <h4>Performance Check-Ins</h4>
             <span class="p-element-parent">← Freedom &amp; Responsibility</span>
-            <p>A recurring, low-ceremony read on whether a person owns their outcomes and whether the company still deserves them. Two honest questions beat a nine-box grid.</p>
+            <p>Two perspectives on the same result. Would I fight to keep this person? Would I fight to keep this job? Asked often, at low ceremony, they beat a nine-box grid.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">4.4</span>
@@ -1067,11 +1108,11 @@
         <div class="p-locked">
           <span class="p-locked-label">Tools</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>N.O.W. Feedback</span>
-          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Barrier Audit</span>
-          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Champion Check-In</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Check-Ins</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Rhythm Set</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Agent Delegation Ladder</span>
 
-          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
       </div>
 
@@ -1106,17 +1147,16 @@
           <span class="p-locked-label">Tools</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Symbios Culture Index</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Culture Pulse</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Barrier Audit</span>
 
-          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Five%20P%27s%20methods%20and%20tools">Request access →</a>
+          <a class="p-request" href="mailto:connect@onesymbios.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
       </div>
 
     </div>
 
-    <p class="section-lead reveal">Culture shows up in the numbers. It reaches them through alignment, decision speed, how much a team is willing to try, and how much people care. That is what the whole method rests on, and it is the part I have watched hold for twenty years.</p>
-
     <div class="reveal" style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:2rem;">
-      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="btn btn-outline" target="_blank" rel="noopener">Read a point of view</a>
+      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="btn btn-primary" target="_blank" rel="noopener">Read Point Of View</a>
     </div>
   </div>
 </section>
@@ -1203,8 +1243,8 @@
   <div class="contact-inner">
     <div class="label" style="text-align: center;">Connect</div>
     <div class="rule" style="margin: 1rem auto 2rem;"></div>
-    <h2 class="reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300; max-width: none; margin-bottom: 1rem;">Two good reasons to write.</h2>
-    <p class="reveal">If this is the kind of thing you think about, write to me. The best conversations I have start that way. And if you run a company and want the method run properly, that's the other one.</p>
+    <h2 class="reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 300; max-width: none; margin-bottom: 1rem;">Two good reasons to reach out.</h2>
+    <p class="reveal">If this is the kind of thing you think about, write to me. And if you run a company and think Symbios Culture can help, that's the other one.</p>
     <a href="mailto:connect@onesymbios.com" class="btn btn-primary reveal">Write to me</a>
     <br>
     <a href="mailto:connect@onesymbios.com" class="contact-email reveal">connect@onesymbios.com</a>
