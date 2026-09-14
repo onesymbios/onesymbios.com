@@ -18,6 +18,16 @@ netlify.toml          tells Netlify to publish this folder as-is
 Every page is one self-contained file, styling and behaviour included. Open one straight from
 disk in a browser and it looks exactly like the live thing.
 
+## Who can publish
+
+Claude can publish to this repo directly. A GitHub key scoped to this one repo lives on
+Kyle's Mac at `Symbios/Marketing & Communications/Website/.git-publish-token`, so no
+permission step is needed each time. To revoke it, delete the token at
+github.com/settings/personal-access-tokens - publishing stops and the site is unaffected.
+
+If that route is unavailable, the fallback is to attach this repo to a Claude conversation
+with write access, which works from a phone and does not need the Mac.
+
 ## Editing
 
 For a small change, edit the file on github.com: open it, click the pencil, save with
