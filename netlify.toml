@@ -1,7 +1,44 @@
-# onesymbios.com — static site, no build step. Netlify publishes this repo root as-is.
+# symbiosculture.com — static site, no build step. Netlify publishes this repo root as-is.
 [build]
   publish = "."
   command = ""
+
+# Preserve old website links and use the new primary domain.
+[[redirects]]
+  from = "https://onesymbios.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://onesymbios.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.onesymbios.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.onesymbios.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.symbiosculture.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.symbiosculture.com/*"
+  to = "https://symbiosculture.com/:splat"
+  status = 301
+  force = true
 
 # /representation/app/ used to serve a byte-identical copy of the Representation app.
 # The copy is gone; the URL still works.

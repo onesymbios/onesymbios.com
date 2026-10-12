@@ -1,4 +1,4 @@
-# onesymbios.com
+# symbiosculture.com
 
 The Symbios marketing site. Static HTML, no build step, no dependencies.
 
