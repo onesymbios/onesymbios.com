@@ -85,14 +85,12 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
+      display: inline-flex; align-items: center; gap: 0.75rem;
       font-size: 1rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text); text-decoration: none;
     }
-    .nav-logo span {
-      font-weight: 300; opacity: 0.5; margin-left: 0.5em;
-      font-size: 0.7rem; letter-spacing: 0.18em;
-    }
+    .nav-logo-mark { width: 1.65rem; height: 2.95rem; flex: none; display: block; }
     .nav-links { display: flex; gap: 2.75rem; align-items: flex-start; }
     .nav-links a {
       color: var(--muted); text-decoration: none;
@@ -825,7 +823,7 @@
 
 <!-- ── NAVIGATION ── -->
 <nav>
-  <a href="#top" class="nav-logo">Symbios</a>
+  <a href="#top" class="nav-logo"><svg class="nav-logo-mark" viewBox="150 107 100 178" aria-hidden="true" focusable="false"><path d="M231 129 C215 113 184 117 174 135 C146 183 218 173 232 207 C248 246 202 264 163 231" fill="none" stroke="currentColor" stroke-width="7.5" stroke-linecap="round"/><circle cx="170" cy="273" r="9" fill="#80a6ff"/><circle cx="200" cy="273" r="9" fill="#ff8c5a"/><circle cx="230" cy="273" r="9" fill="#abc9e9"/></svg>Symbios</a>
   <div class="nav-links">
     <div class="nav-groups">
       <div class="nav-group">
