@@ -44,4 +44,4 @@ Backups of every version published before September 2026, and the history of how
 to be built, are kept on Kyle's Mac under `Symbios/Marketing & Communications/Website/`.
 
 Symbios is a culture consultancy. Culture is a profit strategy.
-Say hello at connect@onesymbios.com
+Say hello at connect@symbiosculture.com
