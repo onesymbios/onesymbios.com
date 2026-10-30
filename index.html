@@ -823,7 +823,15 @@
       .nav-hamburger { display: flex; }
     }
 
-  </style>
+      @media (max-width: 900px) {
+      .flow-step { position: relative; padding-right: 3rem; scroll-margin-top: 6rem; }
+      .flow-step::after { content: '+'; position: absolute; right: 1.25rem; top: 1.5rem; font-size: 1.4rem; color: var(--accent-text); }
+      .flow-step[aria-expanded="true"]::after { content: '−'; }
+      .flow-step[aria-expanded="true"] { background: rgba(46,107,255,0.05); }
+      .flow-pipeline > .p-panel { padding: 1.25rem; background: var(--bg3); border-bottom: 1px solid var(--border); }
+      .flow-pipeline .flow-arrow { display: none; }
+    }
+</style>
 </head>
 <body>
 
@@ -929,7 +937,7 @@
     <h2 class="section-title reveal">A culture design system.</h2>
     <p class="section-desc reveal">Five stages, four elements each, from purpose through to performance. Tools that turn culture into action, measured by alignment, speed, innovation and motivation.</p>
     <div class="culture-band-label reveal">The Framework · The 5 P's</div>
-    <p class="p-hint reveal">The stages and elements are public. The tools that execute them are available on request. Hover a stage to see what it contains.</p>
+    <p class="p-hint reveal">Explore the Five Ps below. Select a stage to see its elements. Supporting tools are available on request.</p>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-lock" viewBox="0 0 10 12"><path d="M2.2 5.2V3.3a2.8 2.8 0 0 1 5.6 0v1.9" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="0.6" y="5.2" width="8.8" height="6.2" rx="1.2" fill="currentColor"/></symbol></svg>
     <div class="flow-pipeline reveal" role="tablist" aria-label="The five stages">
       <button type="button" class="flow-step" role="tab" id="ptab-1" aria-controls="ppanel-1" aria-selected="true">
@@ -1272,44 +1280,54 @@
     var tabs = [].slice.call(document.querySelectorAll('.flow-step'));
     var panels = [].slice.call(document.querySelectorAll('.p-panel'));
     if (tabs.length !== panels.length || !tabs.length) return;
+    var pipeline = tabs[0].parentNode;
+    var container = panels[0].parentNode;
+    var mobile = window.matchMedia('(max-width: 900px)');
+    var active = 0;
     function select(i) {
+      active = i;
       tabs.forEach(function (t, j) {
-        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
-        t.setAttribute('tabindex', j === i ? '0' : '-1');
+        if (mobile.matches) {
+          t.removeAttribute('aria-selected');
+          t.setAttribute('aria-expanded', j === i ? 'true' : 'false');
+          t.setAttribute('tabindex', '0');
+        } else {
+          t.removeAttribute('aria-expanded');
+          t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+          t.setAttribute('tabindex', j === i ? '0' : '-1');
+        }
       });
       panels.forEach(function (p, j) { p.hidden = j !== i; });
     }
+    function layout() {
+      pipeline.setAttribute('role', mobile.matches ? 'group' : 'tablist');
+      pipeline.setAttribute('aria-label', 'The five stages');
+      container.hidden = mobile.matches;
+      tabs.forEach(function (t, i) {
+        t.setAttribute('role', mobile.matches ? 'button' : 'tab');
+        panels[i].setAttribute('role', mobile.matches ? 'region' : 'tabpanel');
+        panels[i].style.minHeight = '';
+        if (mobile.matches) t.after(panels[i]);
+        else container.appendChild(panels[i]);
+      });
+      select(active < 0 && !mobile.matches ? 0 : active);
+    }
     tabs.forEach(function (t, i) {
-      t.addEventListener('mouseenter', function () { select(i); });
-      t.addEventListener('focus', function () { select(i); });
-      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('click', function () {
+        select(mobile.matches && active === i ? -1 : i);
+      });
       t.addEventListener('keydown', function (e) {
+        if (mobile.matches) return;
         var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
         if (!d) return;
         e.preventDefault();
-        tabs[(i + d + tabs.length) % tabs.length].focus();
+        var next = (i + d + tabs.length) % tabs.length;
+        select(next);
+        tabs[next].focus();
       });
     });
-    // Hold one height for every panel so hovering across the row never jumps.
-    function sizePanels() {
-      var open = panels.filter(function (p) { return !p.hidden; })[0];
-      var tallest = 0;
-      panels.forEach(function (p) { p.style.minHeight = ''; });
-      panels.forEach(function (p) {
-        p.hidden = false;
-        tallest = Math.max(tallest, p.offsetHeight);
-        p.hidden = true;
-      });
-      panels.forEach(function (p) { p.style.minHeight = tallest + 'px'; });
-      if (open) open.hidden = false;
-    }
-    select(0);
-    sizePanels();
-    var t;
-    window.addEventListener('resize', function () {
-      clearTimeout(t);
-      t = setTimeout(sizePanels, 150);
-    });
+    mobile.addEventListener('change', layout);
+    layout();
   })();
 
   // Enable JS-powered animations only when JS is running
