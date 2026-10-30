@@ -823,7 +823,15 @@
       .nav-hamburger { display: flex; }
     }
 
-  </style>
+      @media (max-width: 900px) {
+      .flow-step { position: relative; padding-right: 3rem; scroll-margin-top: 6rem; }
+      .flow-step::after { content: '+'; position: absolute; right: 1.25rem; top: 1.5rem; font-size: 1.4rem; color: var(--accent-text); }
+      .flow-step[aria-expanded="true"]::after { content: '−'; }
+      .flow-step[aria-expanded="true"] { background: rgba(46,107,255,0.05); }
+      .flow-pipeline > .p-panel { padding: 1.25rem; background: var(--bg3); border-bottom: 1px solid var(--border); }
+      .flow-pipeline .flow-arrow { display: none; }
+    }
+</style>
 </head>
 <body>
 
@@ -926,40 +934,40 @@
   <div class="section-inner">
     <div class="label">Symbios Culture</div>
     <div class="rule"></div>
-    <h2 class="section-title reveal">A culture design system.</h2>
+    <h2 class="section-title reveal">A framework for shaping how people work together.</h2>
     <p class="section-desc reveal">Five stages, four elements each, from purpose through to performance. Tools that turn culture into action, measured by alignment, speed, innovation and motivation.</p>
     <div class="culture-band-label reveal">The Framework · The 5 P's</div>
-    <p class="p-hint reveal">The stages and elements are public. The tools that execute them are available on request. Hover a stage to see what it contains.</p>
+    <p class="p-hint reveal">Explore the Five Ps below. Select a stage to see its elements. Supporting tools are available on request.</p>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ic-lock" viewBox="0 0 10 12"><path d="M2.2 5.2V3.3a2.8 2.8 0 0 1 5.6 0v1.9" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="0.6" y="5.2" width="8.8" height="6.2" rx="1.2" fill="currentColor"/></symbol></svg>
     <div class="flow-pipeline reveal" role="tablist" aria-label="The five stages">
       <button type="button" class="flow-step" role="tab" id="ptab-1" aria-controls="ppanel-1" aria-selected="true">
         <span class="flow-arrow" aria-hidden="true">→</span>
         <span class="flow-step-n">01</span>
         <span class="flow-step-h">Purpose</span>
-        <span class="flow-step-q">Why this exists, and why it matters</span>
+        <span class="flow-step-q">Why the company exists and why its work matters</span>
       </button>
       <button type="button" class="flow-step" role="tab" id="ptab-2" aria-controls="ppanel-2" aria-selected="false" tabindex="-1">
         <span class="flow-arrow" aria-hidden="true">→</span>
         <span class="flow-step-n">02</span>
         <span class="flow-step-h">Principles</span>
-        <span class="flow-step-q">How decisions get made without rules</span>
+        <span class="flow-step-q">How people in the company behave and make decisions</span>
       </button>
       <button type="button" class="flow-step" role="tab" id="ptab-3" aria-controls="ppanel-3" aria-selected="false" tabindex="-1">
         <span class="flow-arrow" aria-hidden="true">→</span>
         <span class="flow-step-n">03</span>
         <span class="flow-step-h">Priorities</span>
-        <span class="flow-step-q">What wins right now, and what stops</span>
+        <span class="flow-step-q">What the company focuses on now and what it stops doing</span>
       </button>
       <button type="button" class="flow-step" role="tab" id="ptab-4" aria-controls="ppanel-4" aria-selected="false" tabindex="-1">
         <span class="flow-arrow" aria-hidden="true">→</span>
         <span class="flow-step-n">04</span>
         <span class="flow-step-h">Practices</span>
-        <span class="flow-step-q">How it becomes ordinary behavior</span>
+        <span class="flow-step-q">How the company puts its principles into everyday action</span>
       </button>
       <button type="button" class="flow-step" role="tab" id="ptab-5" aria-controls="ppanel-5" aria-selected="false" tabindex="-1">
         <span class="flow-step-n">05</span>
         <span class="flow-step-h">Performance</span>
-        <span class="flow-step-q">Whether any of it actually worked</span>
+        <span class="flow-step-q">How the company knows it's achieving the outcomes that matter</span>
       </button>
     </div>
 
@@ -968,7 +976,7 @@
       <div class="p-panel" id="ppanel-1" data-p="1" role="tabpanel" aria-labelledby="ptab-1">
         <div class="p-panel-head">
           <div class="p-panel-kicker">Purpose Elements</div>
-          <p>Why the organization exists and why the work matters to the people doing it. Most purpose work stops at the sentence. Three of these four are the parts that get skipped.</p>
+          <p>Why the organization exists and why its work matters. These four elements explain its purpose, how it creates value, where it comes from, and what it rules out.</p>
         </div>
         <div class="p-elements">
           <div class="p-element">
@@ -978,8 +986,8 @@
           </div>
           <div class="p-element">
             <span class="p-element-n">1.2</span>
-            <h4>The Mechanism</h4>
-            <p>The causal chain from the statement to the money, in one sentence. A purpose without a mechanism is a poster.</p>
+            <h4>The Connection</h4>
+            <p>How fulfilling the purpose creates value for the people the company serves.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">1.3</span>
@@ -1004,7 +1012,7 @@
       <div class="p-panel" id="ppanel-2" data-p="2" role="tabpanel" aria-labelledby="ptab-2" hidden>
         <div class="p-panel-head">
           <div class="p-panel-kicker">Principles Elements</div>
-          <p>The behavioral standards and decision heuristics that scale culture without rules. Four paired tensions, held together rather than traded off. The four are fixed. How a company writes them is not, and they only count when the leadership team writes them in its own words.</p>
+          <p>The behavioral standards and decision heuristics that guide how people work together. Principles help people make tradeoffs when priorities collide. They become real only when practiced, not when written.</p>
         </div>
         <div class="p-elements">
           <div class="p-element">
@@ -1104,7 +1112,7 @@
           <span class="p-locked-label">Tools</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>N.O.W. Feedback</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Check-Ins</span>
-          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Rhythm Set</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Rhythm Builder</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Agent Delegation Ladder</span>
 
           <a class="p-request" href="mailto:connect@symbiosculture.com?subject=Symbios%20Culture%20tools">Request access →</a>
@@ -1114,35 +1122,35 @@
       <div class="p-panel" id="ppanel-5" data-p="5" role="tabpanel" aria-labelledby="ptab-5" hidden>
         <div class="p-panel-head">
           <div class="p-panel-kicker">Performance Elements</div>
-          <p>The signals that establish whether the system is working. One measure per mechanism, and the same four mechanisms the commercial claim rests on. All four are baselined before the practices go in.</p>
+          <p>Signals that show how the culture supports performance and where it needs to improve.</p>
         </div>
         <div class="p-elements">
           <div class="p-element">
             <span class="p-element-n">5.1</span>
             <h4>Alignment</h4>
-            <p>How much of the direction that was set survives the period unchanged. Aligned teams don't wait, and most execution problems are alignment problems wearing a costume.</p>
+            <p>People understand what matters most and coordinate their decisions and work around it.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">5.2</span>
             <h4>Speed</h4>
-            <p>Median time from a decision being raised to being resolved, on an agreed class of decisions. Margin hides in the work nobody double-checks.</p>
+            <p>People make timely decisions and move work forward without unnecessary delays.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">5.3</span>
             <h4>Innovation</h4>
-            <p>Improvements that started below the executive layer and shipped inside the period. Not a department.</p>
+            <p>People turn ideas and learning into improvements that make a meaningful difference.</p>
           </div>
           <div class="p-element">
             <span class="p-element-n">5.4</span>
             <h4>Motivation</h4>
-            <p>Regretted attrition against baseline, and leader effectiveness on the culture pulse. Motivation you don't have to manage is the cheapest of the four to sustain.</p>
+            <p>People find meaning in their work and have the autonomy and support to contribute.</p>
           </div>
         </div>
         <div class="p-locked">
           <span class="p-locked-label">Tools</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Symbios Culture Index</span>
           <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Culture Pulse</span>
-          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Barrier Audit</span>
+          <span class="p-lock"><svg aria-hidden="true"><use href="#ic-lock"></use></svg>Clear the Path</span>
 
           <a class="p-request" href="mailto:connect@symbiosculture.com?subject=Symbios%20Culture%20tools">Request access →</a>
         </div>
@@ -1162,34 +1170,15 @@
     <div class="label">Symbios Ideas</div>
     <div class="rule"></div>
     <h2 class="section-title reveal">An ongoing conversation.</h2>
-    <p class="section-lead reveal">I write at the intersection of people, culture, technology, and flow. X is the main channel. Follow along at <a href="https://x.com/symbiosculture" target="_blank" rel="noopener" style="color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">@symbiosculture</a>.</p>
-    <div class="thinking-grid">
-      <div class="thinking-card reveal">
-        <div class="thinking-tag">Personal</div>
-        <h4>Individual Flow</h4>
-        <p>Attention, energy, and technology in daily life.</p>
-      </div>
-      <div class="thinking-card reveal">
-        <div class="thinking-tag">Work</div>
-        <h4>Team, Culture and Leadership</h4>
-        <p>Meetings, decisions, communication patterns, and the leadership behaviors that create or kill momentum.</p>
-      </div>
-      <div class="thinking-card reveal">
-        <div class="thinking-tag">Systems</div>
-        <h4>Org &amp; Product Design</h4>
-        <p>How organizational structure, technology architecture, and human + agent collaboration help or get in the way.</p>
-      </div>
-      <div class="thinking-card reveal">
-        <div class="thinking-tag">Environment</div>
-        <h4>Context &amp; Space</h4>
-        <p>How physical and mental context — nature, movement, space, lifestyle — shape the quality of the work.</p>
-      </div>
-      <div class="thinking-card reveal" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; background: transparent; border-style: dashed;">
-        <p style="font-size: 0.8rem; color: var(--muted); font-style: italic; line-height: 1.8;">"Does this create flow — or friction?" That's the question behind every Symbios idea.</p>
-      </div>
-    </div>
+    <p class="section-lead reveal">I explore how people, culture, and technology work together, guided by a question: does this create flow or friction? Read the points of view below, or follow <a href="https://x.com/symbiosculture" target="_blank" rel="noopener" style="color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">@symbiosculture</a> on X for shorter thoughts and conversation.</p>
     <div class="pov-label reveal">Points of View</div>
     <div class="pov-list reveal">
+      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="pov-item" target="_blank" rel="noopener">
+        <span class="pov-item-tag">Start Here</span>
+        <span class="pov-item-title">Culture Is a Performance System</span>
+        <span class="pov-item-sub">The four paired tensions behind a high-performing culture</span>
+        <span class="pov-item-arrow">→</span>
+      </a>
       <a href="https://docs.google.com/document/d/1HqnECPnSH0Zd6dkBlqjO_H0x__g3VVzBKGh6vQRZmZE/preview" class="pov-item" target="_blank" rel="noopener">
         <span class="pov-item-tag">Standards</span>
         <span class="pov-item-title">Your Real Standard Is the Worst Work You Accept</span>
@@ -1208,12 +1197,7 @@
         <span class="pov-item-sub">The drag your team feels is the most honest data in the company</span>
         <span class="pov-item-arrow">→</span>
       </a>
-      <a href="https://docs.google.com/document/d/1NqO3mWb_IbqcVz5jhBJWH066BRYdYpgwzPOTNjtTRg0/preview" class="pov-item" target="_blank" rel="noopener">
-        <span class="pov-item-tag">Culture</span>
-        <span class="pov-item-title">Culture Is a Performance System</span>
-        <span class="pov-item-sub">The four paired tensions behind a high-performing culture</span>
-        <span class="pov-item-arrow">→</span>
-      </a>
+
       <a href="https://docs.google.com/document/d/1uxwfl7KnRO9hkf4uNiftC7yYYqLM4h4UnsvA0xwsLWw/preview" class="pov-item" target="_blank" rel="noopener">
         <span class="pov-item-tag">Flow</span>
         <span class="pov-item-title">The Flow State Future</span>
@@ -1296,44 +1280,54 @@
     var tabs = [].slice.call(document.querySelectorAll('.flow-step'));
     var panels = [].slice.call(document.querySelectorAll('.p-panel'));
     if (tabs.length !== panels.length || !tabs.length) return;
+    var pipeline = tabs[0].parentNode;
+    var container = panels[0].parentNode;
+    var mobile = window.matchMedia('(max-width: 900px)');
+    var active = 0;
     function select(i) {
+      active = i;
       tabs.forEach(function (t, j) {
-        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
-        t.setAttribute('tabindex', j === i ? '0' : '-1');
+        if (mobile.matches) {
+          t.removeAttribute('aria-selected');
+          t.setAttribute('aria-expanded', j === i ? 'true' : 'false');
+          t.setAttribute('tabindex', '0');
+        } else {
+          t.removeAttribute('aria-expanded');
+          t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+          t.setAttribute('tabindex', j === i ? '0' : '-1');
+        }
       });
       panels.forEach(function (p, j) { p.hidden = j !== i; });
     }
+    function layout() {
+      pipeline.setAttribute('role', mobile.matches ? 'group' : 'tablist');
+      pipeline.setAttribute('aria-label', 'The five stages');
+      container.hidden = mobile.matches;
+      tabs.forEach(function (t, i) {
+        t.setAttribute('role', mobile.matches ? 'button' : 'tab');
+        panels[i].setAttribute('role', mobile.matches ? 'region' : 'tabpanel');
+        panels[i].style.minHeight = '';
+        if (mobile.matches) t.after(panels[i]);
+        else container.appendChild(panels[i]);
+      });
+      select(active < 0 && !mobile.matches ? 0 : active);
+    }
     tabs.forEach(function (t, i) {
-      t.addEventListener('mouseenter', function () { select(i); });
-      t.addEventListener('focus', function () { select(i); });
-      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('click', function () {
+        select(mobile.matches && active === i ? -1 : i);
+      });
       t.addEventListener('keydown', function (e) {
+        if (mobile.matches) return;
         var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
         if (!d) return;
         e.preventDefault();
-        tabs[(i + d + tabs.length) % tabs.length].focus();
+        var next = (i + d + tabs.length) % tabs.length;
+        select(next);
+        tabs[next].focus();
       });
     });
-    // Hold one height for every panel so hovering across the row never jumps.
-    function sizePanels() {
-      var open = panels.filter(function (p) { return !p.hidden; })[0];
-      var tallest = 0;
-      panels.forEach(function (p) { p.style.minHeight = ''; });
-      panels.forEach(function (p) {
-        p.hidden = false;
-        tallest = Math.max(tallest, p.offsetHeight);
-        p.hidden = true;
-      });
-      panels.forEach(function (p) { p.style.minHeight = tallest + 'px'; });
-      if (open) open.hidden = false;
-    }
-    select(0);
-    sizePanels();
-    var t;
-    window.addEventListener('resize', function () {
-      clearTimeout(t);
-      t = setTimeout(sizePanels, 150);
-    });
+    mobile.addEventListener('change', layout);
+    layout();
   })();
 
   // Enable JS-powered animations only when JS is running
